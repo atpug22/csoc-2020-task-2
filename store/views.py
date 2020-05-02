@@ -18,10 +18,12 @@ def bookDetailView(request, bid):
     template_name = 'store/book_detail.html'
     book1=Book.objects.get(pk=bid)
     num_available=BookCopy.objects.filter(status__exact=True,book__exact=book1).count()
-    value= BookRating.objects.filter(book__exact=book1,user__exact=request.user)
     user_rating=0
-    if(value.count()>0):
-        user_rating=BookRating.objects.filter(book__exact=book1,user__exact=request.user).get().ratinguser
+    if(request.user.is_authenticated):
+        value= BookRating.objects.filter(book__exact=book1,user__exact=request.user)
+        user_rating=0
+        if(value.count()>0):
+            user_rating=BookRating.objects.filter(book__exact=book1,user__exact=request.user).get().ratinguser
 
     context = {
         'book': book1, # set this to an instance of the required book
