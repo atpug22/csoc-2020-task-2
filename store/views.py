@@ -18,7 +18,7 @@ def bookDetailView(request, bid):
     template_name = 'store/book_detail.html'
     book1=Book.objects.get(pk=bid)
     num_available=BookCopy.objects.filter(status__exact=True,book__exact=book1).count()
-    user_rating=0
+    user_rating=0.0
     if(request.user.is_authenticated):
         value= BookRating.objects.filter(book__exact=book1,user__exact=request.user)
         user_rating=0
