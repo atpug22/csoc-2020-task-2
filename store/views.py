@@ -63,7 +63,12 @@ def bookRatingView(request):
 @csrf_exempt
 def bookListView(request):
     template_name = 'store/book_list.html'
-    books=Book.objects.all()
+    data=request.GET
+    print(len(data))
+    if(len(data)>0):
+        books=Book.objects.filter(title__icontains=data['title'],author__icontains=data['author'],genre__icontains=data['genre'])
+    else:
+        books=Book.objects.all()
     context = {
         'books': books, # set this to the list of required books upon filtering using the GET parameters
                        # (i.e. the book search feature will also be implemented in this view)
